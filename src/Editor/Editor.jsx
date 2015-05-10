@@ -13,7 +13,8 @@ class Editor extends React.Component {
     this.state = {
       showModal: false,
       question_start, question_end,
-      chosenLine: null
+      chosenLine: null,
+      foldOn: true
     }
   }
   handleMark(type) {
@@ -36,6 +37,11 @@ class Editor extends React.Component {
       chosenLine: index
     });
   }
+  handleFold() {
+    this.setState({
+      foldOn: !this.state.foldOn
+    })
+  }
   render() {
     var { question_start, question_end } = this.state;
     var Lines = this.props.value.split('\n').map((line, lineNo)=> {
@@ -44,6 +50,9 @@ class Editor extends React.Component {
         classNames += '--gainsboro';
       }
 
+      if(this.state.foldOn && lineNo >= 0 && lineNo < question_start - 5) {
+        return null;
+      }
       return (
         <div className={classNames}  style={{height: 16+'px'}}
              key={lineNo}
@@ -53,6 +62,9 @@ class Editor extends React.Component {
       );
     });
     var Cells = Array.apply(null, new Array(Lines.length)).map((cell, index)=> {
+      if(this.state.foldOn && index >= 0 && index < question_start - 5) {
+        return null;
+      }
       return (
         <a href={`#${index+1}`} key={index} >
           <div className="Editor-cell" id={`${index + 1}`} onClick={this.handleClick.bind(this, index)}>
@@ -67,7 +79,9 @@ class Editor extends React.Component {
         <pre className="Editor Editor--tm" style={{height: 26089 +'px'}}>
           <div className="Editor-gutter Editor-gutter--tm">
             <div className="Editor-gutterLayer Editor-layer">
+              {this.state.foldOn? (<div className="Editor-cell" onClick={this.handleFold.bind(this)}>1</div>):null }
               {Cells}
+              }
             </div>
           </div>
           <div className="Editor-scroller" style={{
@@ -82,6 +96,7 @@ class Editor extends React.Component {
                 marginLeft: 15+ 'px'
             }}>
               <div className="Editor-layer Editor-text">
+                {this.state.foldOn? (<div className="Editor-line" onClick={this.handleFold.bind(this)}>...</div>):null }
                 {Lines}
               </div>
             </div>

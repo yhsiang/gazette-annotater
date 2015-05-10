@@ -10,15 +10,18 @@ class CtrlBar extends React.Component {
   }
 
   render() {
-    var {question_start, question_end} = this.props;
+    var {question_start, question_end, toggleFold, foldOn} = this.props;
+    var text = (foldOn) ? "展開":"折疊";
 
     return (
       <div className="CtrlBar">
         <div className="CtrlBar-wrapper">
           <div className="CtrlBar-menu">
-            <a className="CtrlBar-btn" href={`#${question_start + 1}`}>前往質詢開始：<span> {question_start + 1} </span> </a>
+            <div className="CtrlBar-btn" onClick={toggleFold}>{text}</div>
+           
+            <a className="CtrlBar-btn" href={`#${question_start + 1}`}>前往質詢開始：<span>{question_start + 1} </span> </a>
             
-            <a className="CtrlBar-btn" href={`#${question_end + 1 }`}>前往質詢結束：<span> {question_end + 1} </span></a>
+            <a className="CtrlBar-btn" href={`#${question_end + 1 }`}>前往質詢結束：<span>{question_end + 1} </span></a>
             
           </div>
         </div>

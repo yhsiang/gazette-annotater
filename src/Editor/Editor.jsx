@@ -37,13 +37,13 @@ class Editor extends React.Component {
       chosenLine: index
     });
   }
-  handleFold() {
+  handleFold(value) {
     this.setState({
-      foldOn: !this.state.foldOn
+      foldOn: value
     })
   }
   render() {
-    var { question_start, question_end } = this.state;
+    var { question_start, question_end, foldOn } = this.state;
     var Lines = this.props.value.split('\n').map((line, lineNo)=> {
       var classNames = 'Editor-line';
       if(lineNo >= question_start && lineNo <= question_end) {
@@ -55,7 +55,7 @@ class Editor extends React.Component {
           return (
             <div className="Editor-line"  style={{height: 16+'px'}}
              key={lineNo}
-             onClick={this.handleFold.bind(this)}>
+             onClick={this.handleFold.bind(this, false)}>
              ...
             </div>
           );
@@ -123,7 +123,9 @@ class Editor extends React.Component {
           handleQuestionStart={this.handleMark.bind(this, "question_start")}
           handleQuestionEnd={this.handleMark.bind(this, "question_end")}
           handleModal={this.handleClick.bind(this)} />) : null }
-        <CtrlBar question_start={question_start} question_end={question_end} />
+        <CtrlBar question_start={question_start} question_end={question_end}
+                 toggleFold={this.handleFold.bind(this,!foldOn)}
+                 foldOn={foldOn} />
       </div>
     )
   }

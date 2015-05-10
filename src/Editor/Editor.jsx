@@ -8,29 +8,20 @@ import Modal from '../Modal/Modal.jsx'
 
 class Editor extends React.Component {
   constructor(props) { super(props)
-    var { info_start, info_end,
-          record_start, record_end,
-          report_start, report_end,
-          question_start, question_end,
-          paper_start, paper_end,
-          proposal_start, proposal_end,
-          value } = props;
+    var { question_start, question_end } = props;
     this.state = {
       showModal: false,
-      info_start, info_end,
-      record_start, record_end,
-      report_start, report_end,
       question_start, question_end,
-      paper_start, paper_end,
-      proposal_start, proposal_end,
-      value,
       chosenLine: null
     }
   }
   handleMark(type) {
     switch(type) {
       case 'question_start':
-        this.setState({ question_start: this.state.chosenLine })
+        this.setState({ question_start: this.state.chosenLine });
+        break;
+      case 'question_end':
+        this.setState({ question_end: this.state.chosenLine });
         break;
     }
     this.setState({
@@ -45,37 +36,11 @@ class Editor extends React.Component {
     });
   }
   render() {
-    var { info_start, info_end,
-          record_start, record_end,
-          report_start, report_end,
-          question_start, question_end,
-          paper_start, paper_end,
-          proposal_start, proposal_end,
-          value} = this.state;
-    var Lines = value.split('\n').map((line, lineNo)=> {
+    var { question_start, question_end } = this.state;
+    var Lines = this.props.value.split('\n').map((line, lineNo)=> {
       var classNames = 'Editor-line';
-      if(lineNo >= info_start && lineNo <= info_end) {
-        classNames += '--gainsboro';
-      }
-
-      if(lineNo >= record_start && lineNo <= record_end) {
-        classNames += '--lightGrey';
-      }
-
-      if(lineNo >= report_start && lineNo <= report_end) {
-        classNames += '--silver';
-      }
-
       if(lineNo >= question_start && lineNo <= question_end) {
-        classNames += '--green';
-      }
-
-      if(lineNo >= paper_start && lineNo <= paper_end) {
-        classNames += '--darkGrey';
-      }
-
-      if(lineNo >= proposal_start && lineNo <= proposal_end) {
-        classNames += '--grey';
+        classNames += '--gainsboro';
       }
       return (
         <div className={classNames}  style={{height: 16+'px'}}>
@@ -117,7 +82,10 @@ class Editor extends React.Component {
           </div>
 
         </pre>
-        { this.state.showModal? (<Modal handleMark={this.handleMark.bind(this, "question_start")} handleModal={this.handleClick.bind(this)} />) : null }
+        { this.state.showModal? (<Modal
+          handleQuestionStart={this.handleMark.bind(this, "question_start")}
+          handleQuestionEnd={this.handleMark.bind(this, "question_end")}
+          handleModal={this.handleClick.bind(this)} />) : null }
       </div>
     )
   }

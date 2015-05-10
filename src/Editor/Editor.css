@@ -21,6 +21,7 @@ pre {
   overflow: hidden;
   font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
   direction: ltr;
+  margin-bottom: 60px;
 }
 
 .Editor--tm {

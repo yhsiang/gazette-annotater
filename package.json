@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bluebird": "^2.9.25",
+    "react": "^0.13.3",
+    "react-transmit": "^2.6.1",
+    "superagent": "^1.2.0",
+    "superagent-bluebird-promise": "^2.0.2"
+  },
+  "devDependencies": {
+    "babel-core": "^5.0.8",
+    "babel-loader": "^5.0.0",
+    "css-loader": "^0.11.0",
+    "file-loader": "^0.8.1",
+    "react-hot-loader": "^1.2.7",
+    "style-loader": "^0.11.0",
+    "url-loader": "^0.5.5",
+    "webpack": "^1.8.11",
+    "webpack-dev-server": "^1.8.2"
+  }
+}

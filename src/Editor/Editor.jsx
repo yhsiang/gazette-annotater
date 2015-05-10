@@ -5,6 +5,7 @@ import request from 'superagent-bluebird-promise'
 import './Editor.css'
 
 import Modal from '../Modal/Modal.jsx'
+import CtrlBar from '../CtrlBar/CtrlBar.jsx'
 
 class Editor extends React.Component {
   constructor(props) { super(props)
@@ -89,11 +90,13 @@ class Editor extends React.Component {
           handleQuestionStart={this.handleMark.bind(this, "question_start")}
           handleQuestionEnd={this.handleMark.bind(this, "question_end")}
           handleModal={this.handleClick.bind(this)} />) : null }
+        <CtrlBar question_start={question_start} question_end={question_end} />
       </div>
     )
   }
 }
 
+Editor.displayName = 'Editor'
 
 export default Transmit.createContainer(Editor, {
 

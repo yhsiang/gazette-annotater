@@ -29,6 +29,7 @@ class Modal extends React.Component {
   }
 }
 
+Modal.displayName = 'Modal'
 
 export default Transmit.createContainer(Modal, {
 

@@ -1,0 +1,19 @@
+.CtrlBar {
+  background: -webkit-linear-gradient(top, #F5F3F3 0%,#EDE8E8 50%,#E5DDDD 100%);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  z-index: 980;
+}
+
+.CtrlBar-wrapper {
+  width: 980px;
+  height: 30px;
+  font: 12px/150% Arial, helvetica, clean, "新細明體", "PMingLiU", sans-serif;
+  color: hsl(0, 0%, 20%);
+  margin: auto;
+}

@@ -27,7 +27,6 @@ class Editor extends React.Component {
     });
   }
   handleClick(index) {
-    console.log(index);
     this.setState({
       showModal: !this.state.showModal,
       chosenLine: index
@@ -83,7 +82,7 @@ class Editor extends React.Component {
           </div>
 
         </pre>
-        { this.state.showModal? (<Modal handleMark={this.handleMark.bind(this, "question_start")} handleModal={this.handleClick} />) : null }
+        { this.state.showModal? (<Modal handleMark={this.handleMark.bind(this, "question_start")} handleModal={this.handleClick.bind(this)} />) : null }
       </div>
     )
   }

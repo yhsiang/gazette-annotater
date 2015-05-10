@@ -14,7 +14,7 @@ class Modal extends React.Component {
         <div className="Modal-dialog">
           <div className="Modal-header">
             <h2>我要標記</h2>
-            <a className="Btn-close" onClick={this.props.handeModal}>×</a>
+            <a className="Btn-close" onClick={this.props.handleModal}>×</a>
           </div>
           <div className="Modal-body">
             <p>One modal example here! :D</p>

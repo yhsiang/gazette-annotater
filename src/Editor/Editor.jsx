@@ -121,8 +121,9 @@ class Editor extends React.Component {
       );
     });
 
-    var height = (this.state.foldOn) ? (16 * (Lines.length - question_start + 6) + 9): (16 * (Lines.length - 1) + 9);
-    if(this.state.foldOnQuestion) height = (16 * (Lines.length - question_end + 20) + 9);
+    var height = 16 * (Lines.length - 1) + 9;
+    if(this.state.foldOn)  height -= 16 * question_start;
+    if(this.state.foldOnQuestion) height -= 16 * (question_end - question_start - 20) ;
 
     return (
       <div>

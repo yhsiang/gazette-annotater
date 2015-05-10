@@ -21,6 +21,7 @@ pre {
   overflow: hidden;
   font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
   direction: ltr;
+  margin-bottom: 60px;
 }
 
 .Editor--tm {
@@ -122,6 +123,10 @@ pre {
 
 .Editor-line--gainsboro {
   background: #DCDCDC;
+  cursor: pointer;
+}
+.Editor-line--gainsboro:hover {
+  background: pink;
 }
 
 .Editor-line--lightGrey {

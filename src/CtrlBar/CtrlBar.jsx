@@ -16,10 +16,10 @@ class CtrlBar extends React.Component {
       <div className="CtrlBar">
         <div className="CtrlBar-wrapper">
           <div className="CtrlBar-menu">
-            <a href={`#${question_start + 1}`}>前往質詢開始</a>
-            <span> {question_start + 1} </span>
-            <a href={`#${question_end + 1 }`}>前往質詢結束</a>
-            <span> {question_end + 1} </span>
+            <a className="CtrlBar-btn" href={`#${question_start + 1}`}>前往質詢開始：<span> {question_start + 1} </span> </a>
+            
+            <a className="CtrlBar-btn" href={`#${question_end + 1 }`}>前往質詢結束：<span> {question_end + 1} </span></a>
+            
           </div>
         </div>
       </div>

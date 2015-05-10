@@ -31,7 +31,6 @@ class Editor extends React.Component {
     });
   }
   handleClick(index) {
-    console.log(index);
     this.setState({
       showModal: !this.state.showModal,
       chosenLine: index
@@ -47,6 +46,7 @@ class Editor extends React.Component {
 
       return (
         <div className={classNames}  style={{height: 16+'px'}}
+             key={lineNo}
              onClick={this.handleClick.bind(this,lineNo)}>
           {line}
         </div>
@@ -54,7 +54,7 @@ class Editor extends React.Component {
     });
     var Cells = Array.apply(null, new Array(Lines.length)).map((cell, index)=> {
       return (
-        <a href={`#${index+1}`}>
+        <a href={`#${index+1}`} key={index} >
           <div className="Editor-cell" id={`${index + 1}`} onClick={this.handleClick.bind(this, index)}>
             {index + 1}
           </div>
@@ -76,10 +76,10 @@ class Editor extends React.Component {
               bottom: 0 +'px'
           }}>
             <div className="Editor-content" style={{
-                "margin-top": 0 +'px',
+                marginTop: 0 +'px',
                 width: 848+'px',
                 height: 26189+'px',
-                "margin-left": 15+ 'px'
+                marginLeft: 15+ 'px'
             }}>
               <div className="Editor-layer Editor-text">
                 {Lines}

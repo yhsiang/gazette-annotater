@@ -42,6 +42,7 @@ class Editor extends React.Component {
       if(lineNo >= question_start && lineNo <= question_end) {
         classNames += '--gainsboro';
       }
+
       return (
         <div className={classNames}  style={{height: 16+'px'}}>
           {line}
@@ -50,9 +51,11 @@ class Editor extends React.Component {
     });
     var Cells = Array.apply(null, new Array(Lines.length)).map((cell, index)=> {
       return (
-        <div className="Editor-cell" onClick={this.handleClick.bind(this, index)}>
-          {index + 1}
-        </div>
+        <a href={`#${index+1}`}>
+          <div className="Editor-cell" id={`${index + 1}`} onClick={this.handleClick.bind(this, index)}>
+            {index + 1}
+          </div>
+        </a>
       );
     });
 

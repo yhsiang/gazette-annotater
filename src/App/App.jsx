@@ -15,6 +15,8 @@ class App extends React.Component {
       <div className="App">
         <h1>立院公報註記小幫手</h1>
         <p>請先點選行號，並且選擇標記。</p>
+        <p><a href="#321">前往質詢開始</a></p>
+        <p><a href="#1535">前往質詢結束</a></p>
         <Editor
           info_start={2}
           info_end={9}

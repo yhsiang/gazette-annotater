@@ -1,0 +1,18 @@
+.App-title {
+  background: hsl(0, 100%, 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  min-height: 20px;
+  font-weight: 800;
+  font-size: 24px;
+  z-index: 100;
+  background: hsl(177, 32%, 57%);
+  padding: 10px;
+}
+
+.App-body {
+  margin-top: 50px;
+}

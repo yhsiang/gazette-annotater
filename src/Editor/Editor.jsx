@@ -13,7 +13,8 @@ class Editor extends React.Component {
     this.state = {
       showModal: false,
       question_start, question_end,
-      chosenLine: null
+      chosenLine: null,
+      foldOn: true
     }
   }
   handleMark(type) {
@@ -36,6 +37,11 @@ class Editor extends React.Component {
       chosenLine: index
     });
   }
+  handleFold() {
+    this.setState({
+      foldOn: !this.state.foldOn
+    })
+  }
   render() {
     var { question_start, question_end } = this.state;
     var Lines = this.props.value.split('\n').map((line, lineNo)=> {
@@ -44,6 +50,17 @@ class Editor extends React.Component {
         classNames += '--gainsboro';
       }
 
+      if(this.state.foldOn) {
+        if(lineNo === 1) {
+          return (
+            <div className="Editor-line"  style={{height: 16+'px'}}
+             key={lineNo}
+             onClick={this.handleFold.bind(this)}>
+             ...
+            </div>
+          );
+        } else if( lineNo !== 0 && lineNo < question_start -5) return null;
+      }
       return (
         <div className={classNames}  style={{height: 16+'px'}}
              key={lineNo}
@@ -53,6 +70,16 @@ class Editor extends React.Component {
       );
     });
     var Cells = Array.apply(null, new Array(Lines.length)).map((cell, index)=> {
+      if(this.state.foldOn) {
+        if(index === 1) {
+          return (
+            <div className="Editor-cell"  style={{height: 16+'px'}}
+             key={index}
+             onClick={this.handleFold.bind(this)}> >
+            </div>
+          );
+        } else if( index !== 0 && index < question_start -5) return null;
+      }
       return (
         <a href={`#${index+1}`} key={index} >
           <div className="Editor-cell" id={`${index + 1}`} onClick={this.handleClick.bind(this, index)}>
@@ -68,6 +95,7 @@ class Editor extends React.Component {
           <div className="Editor-gutter Editor-gutter--tm">
             <div className="Editor-gutterLayer Editor-layer">
               {Cells}
+              }
             </div>
           </div>
           <div className="Editor-scroller" style={{

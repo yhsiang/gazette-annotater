@@ -10,7 +10,7 @@ class Modal extends React.Component {
   }
   render() {
     return (
-      <div className="Modal">
+      <div className="Modal" onClick={this.props.handleModal}>
         <div className="Modal-dialog">
           <div className="Modal-header">
             <h2>我要標記</h2>

@@ -122,6 +122,10 @@ pre {
 
 .Editor-line--gainsboro {
   background: #DCDCDC;
+  cursor: pointer;
+}
+.Editor-line--gainsboro:hover {
+  background: pink;
 }
 
 .Editor-line--lightGrey {

@@ -114,7 +114,7 @@ class Editor extends React.Component {
 
       return (
         <a href={`#${index+1}`} key={index} >
-          <div className="Editor-cell" id={`${index + 1}`} onClick={this.handleClick.bind(this, index)}>
+          <div className="Editor-cell" id={`${index + 1}`} style={{height: 16+'px'}} onClick={this.handleClick.bind(this, index)}>
             {index + 1}
           </div>
         </a>

@@ -75,11 +75,13 @@ class Editor extends React.Component {
           return (
             <div className="Editor-cell"  style={{height: 16+'px'}}
              key={index}
-             onClick={this.handleFold.bind(this)}> >
+             onClick={this.handleFold.bind(this)}>
+             { '>' }
             </div>
           );
         } else if( index !== 0 && index < question_start -5) return null;
       }
+
       return (
         <a href={`#${index+1}`} key={index} >
           <div className="Editor-cell" id={`${index + 1}`} onClick={this.handleClick.bind(this, index)}>
@@ -89,13 +91,14 @@ class Editor extends React.Component {
       );
     });
 
+    var height = (this.state.foldOn) ? (16 * (Lines.length - question_start + 6) + 9): (16 * (Lines.length - 1) + 9);
+
     return (
       <div>
-        <pre className="Editor Editor--tm" style={{height: 26089 +'px'}}>
+        <pre className="Editor Editor--tm" style={{height: height + 'px'}}>
           <div className="Editor-gutter Editor-gutter--tm">
             <div className="Editor-gutterLayer Editor-layer">
               {Cells}
-              }
             </div>
           </div>
           <div className="Editor-scroller" style={{
@@ -106,7 +109,7 @@ class Editor extends React.Component {
             <div className="Editor-content" style={{
                 marginTop: 0 +'px',
                 width: 848+'px',
-                height: 26189+'px',
+                height: height + 100 + 'px',
                 marginLeft: 15+ 'px'
             }}>
               <div className="Editor-layer Editor-text">

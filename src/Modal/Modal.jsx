@@ -17,7 +17,7 @@ class Modal extends React.Component {
             <a className="Btn-close" onClick={this.props.handleModal}>×</a>
           </div>
           <div className="Modal-body">
-            <a className="Btn" onClick={this.props.handleQuestionStart} style={{"margin-right": 10 +'px'}}>質詢開始</a>
+            <a className="Btn" onClick={this.props.handleQuestionStart} style={{marginRight: 10 +'px'}}>質詢開始</a>
             <a className="Btn" onClick={this.props.handleQuestionEnd}>質詢結束</a>
           </div>
           <div className="Modal-footer">

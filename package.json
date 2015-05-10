@@ -1,6 +1,27 @@
 {
+  "name": "ly.gazette-annotater",
+  "version": "0.0.1",
+  "description": "立院公報註記小幫手",
+  "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "env NODE_ENV=production webpack build -content-base build/"
+  },
+   "repository": {
+    "type": "git",
+    "url": "https://github.com/yhsiang/gazette-annotater.git"
+  },
+  "keywords": [
+    "ly",
+    "gazetter",
+    "annotation"
+  ],
+  "author": [
+    "Ly Cheng <lyforever62@hotmail.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yhsiang/gazette-annotater/issues"
   },
   "dependencies": {
     "bluebird": "^2.9.25",

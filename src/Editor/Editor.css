@@ -39,7 +39,7 @@ pre {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  pointer-events: none;
+  //pointer-events: none;
 }
 
 .Editor-gutter {
@@ -101,7 +101,11 @@ pre {
 }
 
 .Editor-line {
+  cursor: pointer;
 
+}
+.Editor-line:hover {
+  background: pink;
 }
 
 .Editor-modal {

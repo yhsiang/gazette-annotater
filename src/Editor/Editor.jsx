@@ -31,6 +31,7 @@ class Editor extends React.Component {
     });
   }
   handleClick(index) {
+    console.log(index);
     this.setState({
       showModal: !this.state.showModal,
       chosenLine: index
@@ -45,7 +46,8 @@ class Editor extends React.Component {
       }
 
       return (
-        <div className={classNames}  style={{height: 16+'px'}}>
+        <div className={classNames}  style={{height: 16+'px'}}
+             onClick={this.handleClick.bind(this,lineNo)}>
           {line}
         </div>
       );

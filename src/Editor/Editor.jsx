@@ -43,13 +43,13 @@ class Editor extends React.Component {
       foldOn: value
     })
   }
-  handleFoldQuestion() {
+  handleFoldQuestion(value) {
     this.setState({
-      foldOnQuestion: !this.state.foldOnQuestion
+      foldOnQuestion: value
     })
   }
   render() {
-    var { question_start, question_end, foldOn } = this.state;
+    var { question_start, question_end, foldOn, foldOnQuestion } = this.state;
     var Lines = this.props.value.split('\n').map((line, lineNo)=> {
       var classNames = 'Editor-line';
       if(lineNo >= question_start && lineNo <= question_end) {
@@ -73,7 +73,7 @@ class Editor extends React.Component {
           return (
             <div className={classNames}  style={{height: 16+'px'}}
              key={lineNo}
-             onClick={this.handleFoldQuestion.bind(this)}>
+             onClick={this.handleFoldQuestion.bind(this, false)}>
              ...
             </div>
           );
@@ -93,7 +93,7 @@ class Editor extends React.Component {
           return (
             <div className="Editor-cell"  style={{height: 16+'px'}}
              key={index}
-             onClick={this.handleFold.bind(this)}>
+             onClick={this.handleFold.bind(this, false)}>
              { '>' }
             </div>
           );
@@ -105,7 +105,7 @@ class Editor extends React.Component {
           return (
             <div className="Editor-cell"  style={{height: 16+'px'}}
              key={index}
-             onClick={this.handleFoldQuestion.bind(this)}>
+             onClick={this.handleFoldQuestion.bind(this, false)}>
              { '>' }
             </div>
           );
@@ -122,7 +122,7 @@ class Editor extends React.Component {
     });
 
     var height = 16 * (Lines.length - 1) + 9;
-    if(this.state.foldOn)  height -= 16 * question_start;
+    if(this.state.foldOn)  height -= 16 * (question_start - 8);
     if(this.state.foldOnQuestion) height -= 16 * (question_end - question_start - 20) ;
 
     return (
@@ -157,7 +157,9 @@ class Editor extends React.Component {
           handleModal={this.handleClick.bind(this)} />) : null }
         <CtrlBar question_start={question_start} question_end={question_end}
                  toggleFold={this.handleFold.bind(this,!foldOn)}
-                 foldOn={foldOn} />
+                 foldOn={foldOn}
+                 toggleFoldQuestion={this.handleFoldQuestion.bind(this,!foldOnQuestion)}
+                 foldOnQuestion={foldOnQuestion} />
       </div>
     )
   }

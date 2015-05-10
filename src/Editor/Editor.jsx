@@ -50,8 +50,16 @@ class Editor extends React.Component {
         classNames += '--gainsboro';
       }
 
-      if(this.state.foldOn && lineNo >= 0 && lineNo < question_start - 5) {
-        return null;
+      if(this.state.foldOn) {
+        if(lineNo === 1) {
+          return (
+            <div className="Editor-line"  style={{height: 16+'px'}}
+             key={lineNo}
+             onClick={this.handleFold.bind(this)}>
+             ...
+            </div>
+          );
+        } else if( lineNo !== 0 && lineNo < question_start -5) return null;
       }
       return (
         <div className={classNames}  style={{height: 16+'px'}}
@@ -62,8 +70,15 @@ class Editor extends React.Component {
       );
     });
     var Cells = Array.apply(null, new Array(Lines.length)).map((cell, index)=> {
-      if(this.state.foldOn && index >= 0 && index < question_start - 5) {
-        return null;
+      if(this.state.foldOn) {
+        if(index === 1) {
+          return (
+            <div className="Editor-cell"  style={{height: 16+'px'}}
+             key={index}
+             onClick={this.handleFold.bind(this)}> >
+            </div>
+          );
+        } else if( index !== 0 && index < question_start -5) return null;
       }
       return (
         <a href={`#${index+1}`} key={index} >
@@ -79,7 +94,6 @@ class Editor extends React.Component {
         <pre className="Editor Editor--tm" style={{height: 26089 +'px'}}>
           <div className="Editor-gutter Editor-gutter--tm">
             <div className="Editor-gutterLayer Editor-layer">
-              {this.state.foldOn? (<div className="Editor-cell" onClick={this.handleFold.bind(this)}>1</div>):null }
               {Cells}
               }
             </div>
@@ -96,7 +110,6 @@ class Editor extends React.Component {
                 marginLeft: 15+ 'px'
             }}>
               <div className="Editor-layer Editor-text">
-                {this.state.foldOn? (<div className="Editor-line" onClick={this.handleFold.bind(this)}>...</div>):null }
                 {Lines}
               </div>
             </div>

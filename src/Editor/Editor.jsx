@@ -14,7 +14,8 @@ class Editor extends React.Component {
       showModal: false,
       question_start, question_end,
       chosenLine: null,
-      foldOn: true
+      foldOn: true,
+      foldOnQuestion: true
     }
   }
   handleMark(type) {
@@ -42,6 +43,11 @@ class Editor extends React.Component {
       foldOn: !this.state.foldOn
     })
   }
+  handleFoldQuestion() {
+    this.setState({
+      foldOnQuestion: !this.state.foldOnQuestion
+    })
+  }
   render() {
     var { question_start, question_end } = this.state;
     var Lines = this.props.value.split('\n').map((line, lineNo)=> {
@@ -61,6 +67,18 @@ class Editor extends React.Component {
           );
         } else if( lineNo !== 0 && lineNo < question_start -5) return null;
       }
+
+      if(this.state.foldOnQuestion) {
+        if(lineNo === question_start + 10) {
+          return (
+            <div className={classNames}  style={{height: 16+'px'}}
+             key={lineNo}
+             onClick={this.handleFoldQuestion.bind(this)}>
+             ...
+            </div>
+          );
+        } else if(lineNo > question_start && lineNo < question_end - 10) return null;
+      }
       return (
         <div className={classNames}  style={{height: 16+'px'}}
              key={lineNo}
@@ -75,11 +93,25 @@ class Editor extends React.Component {
           return (
             <div className="Editor-cell"  style={{height: 16+'px'}}
              key={index}
-             onClick={this.handleFold.bind(this)}> >
+             onClick={this.handleFold.bind(this)}>
+             { '>' }
             </div>
           );
         } else if( index !== 0 && index < question_start -5) return null;
       }
+
+      if(this.state.foldOnQuestion) {
+        if(index === question_start + 10) {
+          return (
+            <div className="Editor-cell"  style={{height: 16+'px'}}
+             key={index}
+             onClick={this.handleFoldQuestion.bind(this)}>
+             { '>' }
+            </div>
+          );
+        } else if(index > question_start && index < question_end - 10) return null;
+      }
+
       return (
         <a href={`#${index+1}`} key={index} >
           <div className="Editor-cell" id={`${index + 1}`} onClick={this.handleClick.bind(this, index)}>
@@ -89,13 +121,15 @@ class Editor extends React.Component {
       );
     });
 
+    var height = (this.state.foldOn) ? (16 * (Lines.length - question_start + 6) + 9): (16 * (Lines.length - 1) + 9);
+    if(this.state.foldOnQuestion) height = (16 * (Lines.length - question_end + 20) + 9);
+
     return (
       <div>
-        <pre className="Editor Editor--tm" style={{height: 26089 +'px'}}>
+        <pre className="Editor Editor--tm" style={{height: height + 'px'}}>
           <div className="Editor-gutter Editor-gutter--tm">
             <div className="Editor-gutterLayer Editor-layer">
               {Cells}
-              }
             </div>
           </div>
           <div className="Editor-scroller" style={{
@@ -106,7 +140,7 @@ class Editor extends React.Component {
             <div className="Editor-content" style={{
                 marginTop: 0 +'px',
                 width: 848+'px',
-                height: 26189+'px',
+                height: height + 100 + 'px',
                 marginLeft: 15+ 'px'
             }}>
               <div className="Editor-layer Editor-text">

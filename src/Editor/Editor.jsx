@@ -8,10 +8,22 @@ import Modal from '../Modal/Modal.jsx'
 
 class Editor extends React.Component {
   constructor(props) { super(props)
-    var {info_start, info_end, question_start, question_end, value} = props;
+    var { info_start, info_end,
+          record_start, record_end,
+          report_start, report_end,
+          question_start, question_end,
+          paper_start, paper_end,
+          proposal_start, proposal_end,
+          value } = props;
     this.state = {
       showModal: false,
-      info_start, info_end, question_start, question_end, value,
+      info_start, info_end,
+      record_start, record_end,
+      report_start, report_end,
+      question_start, question_end,
+      paper_start, paper_end,
+      proposal_start, proposal_end,
+      value,
       chosenLine: null
     }
   }
@@ -33,14 +45,37 @@ class Editor extends React.Component {
     });
   }
   render() {
-    var {info_start, info_end, question_start, question_end, value} = this.state;
+    var { info_start, info_end,
+          record_start, record_end,
+          report_start, report_end,
+          question_start, question_end,
+          paper_start, paper_end,
+          proposal_start, proposal_end,
+          value} = this.state;
     var Lines = value.split('\n').map((line, lineNo)=> {
       var classNames = 'Editor-line';
       if(lineNo >= info_start && lineNo <= info_end) {
-        classNames += '--grey';
+        classNames += '--gainsboro';
       }
+
+      if(lineNo >= record_start && lineNo <= record_end) {
+        classNames += '--lightGrey';
+      }
+
+      if(lineNo >= report_start && lineNo <= report_end) {
+        classNames += '--silver';
+      }
+
       if(lineNo >= question_start && lineNo <= question_end) {
         classNames += '--green';
+      }
+
+      if(lineNo >= paper_start && lineNo <= paper_end) {
+        classNames += '--darkGrey';
+      }
+
+      if(lineNo >= proposal_start && lineNo <= proposal_end) {
+        classNames += '--grey';
       }
       return (
         <div className={classNames}  style={{height: 16+'px'}}>

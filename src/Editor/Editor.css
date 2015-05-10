@@ -116,8 +116,24 @@ pre {
   z-index: 10;
 }
 
-.Editor-line--grey {
+.Editor-line--gainsboro {
   background: #DCDCDC;
+}
+
+.Editor-line--lightGrey {
+  background: #D3D3D3;
+}
+
+.Editor-line--silver {
+  background: #C0C0C0;
+}
+
+.Editor-line--darkGrey {
+  background: #A9A9A9;
+}
+
+.Editor-line--grey {
+  background: #808080;
 }
 
 .Editor-line--green {

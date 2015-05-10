@@ -82,7 +82,7 @@ class Editor extends React.Component {
       return (
         <div className={classNames}  style={{height: 16+'px'}}
              key={lineNo}
-             onClick={this.handleClick.bind(this,lineNo)}>
+             onClick={(line.match(/^\s+$/) || line === '') ? null : this.handleClick.bind(this,lineNo)}>
           {line}
         </div>
       );
@@ -114,7 +114,11 @@ class Editor extends React.Component {
 
       return (
         <a href={`#${index+1}`} key={index} >
-          <div className="Editor-cell" id={`${index + 1}`} style={{height: 16+'px'}} onClick={this.handleClick.bind(this, index)}>
+          <div
+            className="Editor-cell"
+            id={`${index + 1}`}
+            style={{height: 16+'px'}}
+            onClick={ ( this.props.value.split('\n')[index].match(/^\s+$/) || this.props.value.split('\n')[index] === '') ? null : this.handleClick.bind(this, index)}>
             {index + 1}
           </div>
         </a>

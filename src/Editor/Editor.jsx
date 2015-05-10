@@ -13,12 +13,6 @@ class Editor extends React.Component {
       chosenLine: null
     }
   }
-  handleModal(lineNo) {
-    this.setState({
-      showModal: !this.state.showModal,
-      chosenLine: lineNo
-    });
-  }
   handleMark(type) {
     switch(type) {
       case 'question_start':
@@ -28,6 +22,13 @@ class Editor extends React.Component {
     this.setState({
       showModal: !this.state.showModal,
       chosenLine: null
+    });
+  }
+  handleClick(index) {
+    console.log(index);
+    this.setState({
+      showModal: !this.state.showModal,
+      chosenLine: index
     });
   }
   render() {
@@ -41,14 +42,14 @@ class Editor extends React.Component {
         classNames += '--green';
       }
       return (
-        <div className={classNames} onClick={this.handleModal.bind(this, lineNo)} style={{height: 16+'px'}}>
+        <div className={classNames}  style={{height: 16+'px'}}>
           {line}
         </div>
       );
     });
     var Cells = Array.apply(null, new Array(Lines.length)).map((cell, index)=> {
       return (
-        <div className="Editor-cell">
+        <div className="Editor-cell" onClick={this.handleClick.bind(this, index)}>
           {index + 1}
         </div>
       );

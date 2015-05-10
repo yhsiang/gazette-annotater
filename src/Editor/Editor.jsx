@@ -4,6 +4,8 @@ import request from 'superagent-bluebird-promise'
 
 import './Editor.css'
 
+import Modal from '../Modal/Modal.jsx'
+
 class Editor extends React.Component {
   constructor(props) { super(props)
     var {info_start, info_end, question_start, question_end, value} = props;
@@ -56,36 +58,33 @@ class Editor extends React.Component {
     });
 
     return (
-      <pre className="Editor Editor--tm" style={{height: 26089 +'px'}}>
-        <div className="Editor-gutter Editor-gutter--tm">
-          <div className="Editor-gutterLayer Editor-layer">
-            {Cells}
+      <div>
+        <pre className="Editor Editor--tm" style={{height: 26089 +'px'}}>
+          <div className="Editor-gutter Editor-gutter--tm">
+            <div className="Editor-gutterLayer Editor-layer">
+              {Cells}
+            </div>
           </div>
-        </div>
-        <div className="Editor-scroller" style={{
-            left: 48 + 'px',
-            right: 0 + 'px',
-            bottom: 0 +'px'
-        }}>
-          <div className="Editor-content" style={{
-              "margin-top": 0 +'px',
-              width: 848+'px',
-              height: 26189+'px',
-              "margin-left": 15+ 'px'
+          <div className="Editor-scroller" style={{
+              left: 48 + 'px',
+              right: 0 + 'px',
+              bottom: 0 +'px'
           }}>
-            <div className="Editor-layer Editor-text">
-              {Lines}
+            <div className="Editor-content" style={{
+                "margin-top": 0 +'px',
+                width: 848+'px',
+                height: 26189+'px',
+                "margin-left": 15+ 'px'
+            }}>
+              <div className="Editor-layer Editor-text">
+                {Lines}
+              </div>
             </div>
           </div>
-        </div>
-        {
-          this.state.showModal? (
-            <div className="Editor-modal">
-              <button onClick={this.handleMark.bind(this, "question_start")}>這是質詢開始</button>
-            </div>
-          ) : null
-        }
-      </pre>
+
+        </pre>
+        { this.state.showModal? (<Modal handleMark={this.handleMark.bind(this, "question_start")} handleModal={this.handleClick} />) : null }
+      </div>
     )
   }
 }

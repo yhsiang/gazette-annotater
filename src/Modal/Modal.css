@@ -1,0 +1,65 @@
+.Modal {
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+
+.Modal-dialog {
+  background: hsl(0, 0%, 100%);
+  border: hsl(0, 0%, 20%) solid 1px;
+  border-radius: 5px;
+  margin-left: -200px;
+  position: fixed;
+  left: 50%;
+  z-index: 11;
+  width: 360px;
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+  top: 20%;
+}
+
+.Modal-header {
+  border-bottom: hsl(0, 0%, 93%) solid 1px;
+}
+
+.Modal-header h2 {
+  font-size: 20px;
+}
+
+.Modal-body {
+  padding: 20px;
+}
+
+.Modal-header, .Modal-footer {
+  padding: 10px 20px;
+}
+
+.Btn {
+  background: hsl(208, 56%, 53%);
+  border: hsl(208, 56%, 47%) solid 1px;
+  border-radius: 3px;
+  color: hsl(0, 100%, 100%);
+  display: inline-block;
+  font-size: 14px;
+  padding: 8px 15px;
+  text-decoration: none;
+  text-align: center;
+  min-width: 60px;
+  position: relative;
+  transition: color .1s ease;
+  /* top: 40em; */
+}
+
+.Btn-close {
+  color: hsl(0, 0%, 67%);
+  font-size: 30px;
+  text-decoration: none;
+  position: absolute;
+  right: 5px;
+  top: 0;
+}

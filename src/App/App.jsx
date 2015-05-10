@@ -13,7 +13,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        {'立院公報註記小幫手'}
+        <h1>立院公報註記小幫手</h1>
+        <p>請先點選行號，並且選擇標記。</p>
         <Editor
           info_start={2}
           info_end={9}

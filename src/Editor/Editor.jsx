@@ -33,16 +33,16 @@ class Editor extends React.Component {
   render() {
     var {info_start, info_end, question_start, question_end, value} = this.state;
     var Lines = value.split('\n').map((line, lineNo)=> {
-      var classNames = 'Editor-doc';
+      var classNames = 'Editor-line';
       if(lineNo >= info_start && lineNo <= info_end) {
-        classNames += ' u-yellow';
+        classNames += '--grey';
       }
       if(lineNo >= question_start && lineNo <= question_end) {
-        classNames += ' u-red';
+        classNames += '--green';
       }
       return (
-        <div className="Editor-line" onClick={this.handleModal.bind(this, lineNo)}>
-          <span className={classNames} >{line}</span>
+        <div className={classNames} onClick={this.handleModal.bind(this, lineNo)} style={{height: 16+'px'}}>
+          {line}
         </div>
       );
     });
@@ -55,13 +55,24 @@ class Editor extends React.Component {
     });
 
     return (
-      <div className="Editor">
-        <div className="Editor-gutter">
-          {Cells}
+      <pre className="Editor Editor--tm" style={{height: 26089 +'px'}}>
+        <div className="Editor-gutter Editor-gutter--tm">
+          <div className="Editor-gutterLayer Editor-layer">
+            {Cells}
+          </div>
         </div>
-        <div className="Editor-scoller">
-          <div className="Editor-content">
-            <div className="Editor-text">
+        <div className="Editor-scroller" style={{
+            left: 48 + 'px',
+            right: 0 + 'px',
+            bottom: 0 +'px'
+        }}>
+          <div className="Editor-content" style={{
+              "margin-top": 0 +'px',
+              width: 848+'px',
+              height: 26189+'px',
+              "margin-left": 15+ 'px'
+          }}>
+            <div className="Editor-layer Editor-text">
               {Lines}
             </div>
           </div>
@@ -73,7 +84,7 @@ class Editor extends React.Component {
             </div>
           ) : null
         }
-      </div>
+      </pre>
     )
   }
 }

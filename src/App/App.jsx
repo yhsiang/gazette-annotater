@@ -12,6 +12,7 @@ class App extends React.Component {
   componentWillMount() {
     var sessionId = localStorage.getItem("id")
     this.props.setQueryParams({ id: sessionId });
+    this.setState({ id: sessionId });
 
   }
   handleNext() {
@@ -21,11 +22,13 @@ class App extends React.Component {
   }
   render() {
     var {doc} = this.props;
+    var {id} = this.state;
     return (
       <div className="App">
         <div className="App-title">立院公報註記小幫手</div>
         <div className="App-body">
           <p>移動滑鼠到你心儀的那一行，按下滑鼠左鍵，就期待著有什麼事情會發生。</p>
+          <div className="App-id">編號：{id}</div>
           <Editor
             meta={doc.meta}
             lines={doc.raw.split('\n') }

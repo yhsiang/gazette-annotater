@@ -70,7 +70,7 @@ class Editor extends React.Component {
 
     var { questions, question_start, question_end, fold_on, fold_on_question } = this.state;
     var pt = 0, start_at = question_start[pt], end_at = question_end[pt];
-    var Lines = this.props.value.split('\n').map((line, index) => {
+    var Lines = this.props.lines.map((line, index) => {
       var classNames = 'Editor-line';
       // 選出質詢範圍
       if( index+1 >= start_at && index+ 1 <= end_at) {
@@ -156,7 +156,7 @@ class Editor extends React.Component {
             className="Editor-cell"
             id={`${index + 1}`}
             style={{height: 16+'px'}}
-            onClick={ ( this.props.value.split('\n')[index].match(/^\s+$/) || this.props.value.split('\n')[index] === '') ? null : this.handleClick.bind(this, index)}>
+            onClick={ ( this.props.lines[index].match(/^\s+$/) || this.props.lines[index] === '') ? null : this.handleClick.bind(this, index)}>
             {index + 1}
           </div>
         </a>
@@ -202,7 +202,10 @@ class Editor extends React.Component {
           handleQuestionStart={this.handleMark.bind(this)}
           handleQuestionEnd={this.handleMark.bind(this)}
           handleModal={this.handleClick.bind(this)}
-          questions={questions} />) : null }
+          questions={questions}
+          line_no={this.state.chosen_line}
+          content={this.props.lines[this.state.chosen_line]}
+          />) : null }
         <CtrlBar ranges={this.mergeRange()}
                  toggleFold={this.handleFold.bind(this, !fold_on)}
                  foldOn={fold_on}

@@ -32,10 +32,11 @@ class Modal extends React.Component {
       <div className="Modal" onClick={this.props.handleModal}>
         <div className="Modal-dialog">
           <div className="Modal-header">
-            <h2>我要標記</h2>
+            <h2>我要標記第{this.props.line_no}行</h2>
             <a className="Btn-close" onClick={this.props.handleModal}>×</a>
           </div>
           <div className="Modal-body">
+            {this.props.content}
             {Btns}
           </div>
           <div className="Modal-footer">

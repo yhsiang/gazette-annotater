@@ -20,7 +20,7 @@ class App extends React.Component {
           <p>移動滑鼠到你心儀的那一行，按下滑鼠左鍵，就期待著有什麼事情會發生。</p>
           <Editor
             meta={doc.meta}
-            value={doc.raw} />
+            lines={doc.raw.split('\n') } />
         </div>
       </div>
     )

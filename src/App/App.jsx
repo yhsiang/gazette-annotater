@@ -46,7 +46,7 @@ export default Transmit.createContainer(App, {
         localStorage.setItem("id", id);
 
       }
-      return request.get(`http://gapi.musou.tw/${id}`).then((res) => res.body.data).catch(()=>{ return {meta:[], raw:""};})
+      return request.get(`https://gapi.musou.tw/${id}`).then((res) => res.body.data).catch(()=>{ return {meta:[], raw:""};})
     }
   }
 });

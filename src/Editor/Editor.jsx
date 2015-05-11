@@ -26,13 +26,14 @@ class Editor extends React.Component {
     }
   }
   handleMark(type, section) {
+    console.log(this, type, section);
     var {question_start, question_end} = this.state;
     switch(type) {
       case 'question_start':
-        question_start[section] = this.state.chosen_line + 1;
+        question_start[section - 1] = this.state.chosen_line + 1;
         break;
       case 'question_end':
-        question_end[section] = this.state.chosen_line + 1;
+        question_end[section - 1] = this.state.chosen_line + 1;
         break;
     }
     this.setState({

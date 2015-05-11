@@ -16,13 +16,15 @@ class Modal extends React.Component {
         section +=1;
         return (
           <a className="Btn"
-          onClick={this.props.handleQuestionStart}
+          key={i}
+          onClick={this.props.handleQuestionStart.bind(this, "question_start", section)}
           style={{marginRight: 10 +'px'}}>{`第${section}段`}質詢開始</a>
         );
       } else {
         return (
           <a className="Btn"
-          onClick={this.props.handleQuestionEnd}
+          key={i}
+          onClick={this.props.handleQuestionEnd.bind(this, "question_end", section)}
           style={{marginTop: 10 +'px'}}>{`第${section}段`}質詢結束</a>
         );
       }

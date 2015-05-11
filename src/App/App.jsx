@@ -19,18 +19,7 @@ class App extends React.Component {
         <div className="App-body">
           <p>移動滑鼠到你心儀的那一行，按下滑鼠左鍵，就期待著有什麼事情會發生。</p>
           <Editor
-            info_start={2}
-            info_end={9}
-            record_start={15}
-            record_end={69}
-            report_start={77}
-            report_end={318}
-            question_start={320}
-            question_end={1534}
-            paper_start={1536}
-            paper_end={1564}
-            proposal_start={1566}
-            proposal_end={1628}
+            meta={doc.meta}
             value={doc.raw} />
         </div>
       </div>

@@ -9,87 +9,118 @@ import CtrlBar from '../CtrlBar/CtrlBar.jsx'
 
 class Editor extends React.Component {
   constructor(props) { super(props)
-    var { question_start, question_end } = props;
+    var question_start = props.meta.map((it)=>{
+      return it.start_at;
+    });
+    var question_end = props.meta.map((it)=>{
+      return it.end_at;
+    });
+
     this.state = {
-      showModal: false,
+      show_modal: false,
+      questions: props.meta.length,
       question_start, question_end,
-      chosenLine: null,
-      foldOn: true,
-      foldOnQuestion: true
+      chosen_line: null,
+      fold_on: true,
+      fold_on_question: true
     }
   }
-  handleMark(type) {
+  handleMark(type, section) {
+    var {question_start, question_end} = this.state;
     switch(type) {
       case 'question_start':
-        this.setState({ question_start: this.state.chosenLine });
+        question_start[section] = this.state.chosen_line + 1;
         break;
       case 'question_end':
-        this.setState({ question_end: this.state.chosenLine });
+        question_end[section] = this.state.chosen_line + 1;
         break;
     }
     this.setState({
-      showModal: !this.state.showModal,
-      chosenLine: null
+      show_modal: !this.state.show_modal,
+      question_start, question_end,
+      chosen_line: null
     });
   }
   handleClick(index) {
     this.setState({
-      showModal: !this.state.showModal,
-      chosenLine: index
+      show_modal: !this.state.show_modal,
+      chosen_line: index
     });
   }
   handleFold(value) {
     this.setState({
-      foldOn: value
+      fold_on: value
     })
   }
   handleFoldQuestion(value) {
     this.setState({
-      foldOnQuestion: value
+      fold_on_question: value
     })
   }
+  mergeRange() {
+    var {questions, question_start, question_end} = this.state;
+    var result = [];
+    for(var i = 0; i< questions; i++) {
+      result.push(question_start[i]);
+      result.push(question_end[i]);
+    }
+    return result;
+  }
   render() {
-    var { question_start, question_end, foldOn, foldOnQuestion } = this.state;
-    var Lines = this.props.value.split('\n').map((line, lineNo)=> {
+
+    var { questions, question_start, question_end, fold_on, fold_on_question } = this.state;
+    var pt = 0, start_at = question_start[pt], end_at = question_end[pt];
+    var Lines = this.props.value.split('\n').map((line, index) => {
       var classNames = 'Editor-line';
-      if(lineNo >= question_start && lineNo <= question_end) {
+      // 選出質詢範圍
+      if( index+1 >= start_at && index+ 1 <= end_at) {
         classNames += '--gainsboro';
       }
-
-      if(this.state.foldOn) {
-        if(lineNo === 1) {
+      // 折疊質詢前文字
+      if(fold_on) {
+        if(index === start_at - 10) {
           return (
             <div className="Editor-line"  style={{height: 16+'px'}}
-             key={lineNo}
+             key={index}
              onClick={this.handleFold.bind(this, false)}>
-             ...
+             { '...（展開內文）...' }
             </div>
           );
-        } else if( lineNo !== 0 && lineNo < question_start -5) return null;
+        }
+        if(pt === 0 && index < start_at - 5) return null;
+        if( pt > 0 && index > question_end[0] + 5  && index < start_at - 5) return null;
       }
-
-      if(this.state.foldOnQuestion) {
-        if(lineNo === question_start + 10) {
+      // 處理折疊質詢
+      if(fold_on_question) {
+        if(index === start_at + 20) {
           return (
             <div className={classNames}  style={{height: 16+'px'}}
-             key={lineNo}
+             key={index}
              onClick={this.handleFoldQuestion.bind(this, false)}>
-             ...
+             { '...（展開質詢內文）...' }
             </div>
           );
-        } else if(lineNo > question_start && lineNo < question_end - 10) return null;
+        } else if(index + 1 > start_at + 10 && index + 1 < end_at - 10) return null;
+      }
+      // 轉成下一段質詢
+      if(index + 1 === end_at) {
+        pt += 1;
+        start_at = question_start[pt];
+        end_at = question_end[pt];
       }
       return (
         <div className={classNames}  style={{height: 16+'px'}}
-             key={lineNo}
-             onClick={(line.match(/^\s+$/) || line === '') ? null : this.handleClick.bind(this,lineNo)}>
+             key={index}
+             onClick={(line.match(/^\s+$/) || line === '') ? null : this.handleClick.bind(this, index)}>
           {line}
         </div>
       );
     });
-    var Cells = Array.apply(null, new Array(Lines.length)).map((cell, index)=> {
-      if(this.state.foldOn) {
-        if(index === 1) {
+    pt = 0, start_at = question_start[pt], end_at = question_end[pt];
+    var Cells = Array.apply(null, new Array(Lines.length)).map((cell, index) => {
+      // 折疊質詢前文字
+      if(fold_on) {
+        if(index === start_at - 10) {
           return (
             <div className="Editor-cell"  style={{height: 16+'px'}}
              key={index}
@@ -97,11 +128,13 @@ class Editor extends React.Component {
              { '>' }
             </div>
           );
-        } else if( index !== 0 && index < question_start -5) return null;
+        }
+        if(pt === 0 && index < start_at - 5) return null;
+        if( pt > 0 && index > question_end[0] + 5  && index < start_at - 5) return null;
       }
-
-      if(this.state.foldOnQuestion) {
-        if(index === question_start + 10) {
+      // 處理折疊質詢
+      if(fold_on_question) {
+        if(index === start_at + 20) {
           return (
             <div className="Editor-cell"  style={{height: 16+'px'}}
              key={index}
@@ -109,9 +142,14 @@ class Editor extends React.Component {
              { '>' }
             </div>
           );
-        } else if(index > question_start && index < question_end - 10) return null;
+        } else if(index + 1 > start_at + 10 && index + 1 < end_at - 10) return null;
       }
-
+      // 轉成下一段質詢
+      if(index + 1 === end_at) {
+        pt += 1;
+        start_at = question_start[pt];
+        end_at = question_end[pt];
+      }
       return (
         <a href={`#${index+1}`} key={index} >
           <div
@@ -125,9 +163,14 @@ class Editor extends React.Component {
       );
     });
 
+    // 計算整個高度
     var height = 16 * (Lines.length - 1) + 9;
-    if(this.state.foldOn)  height -= 16 * (question_start - 8);
-    if(this.state.foldOnQuestion) height -= 16 * (question_end - question_start - 20) ;
+    if(fold_on)  height -= 16 * question_start[0];
+    var questions_height = 0;
+    if(fold_on_question) {
+      for(var i = 0; i< questions; i++) {  questions_height += question_end[i] - question_start[i]; }
+      height -= 16 * (questions_height - 45) ;
+    }
 
     return (
       <div>
@@ -155,15 +198,16 @@ class Editor extends React.Component {
           </div>
 
         </pre>
-        { this.state.showModal? (<Modal
-          handleQuestionStart={this.handleMark.bind(this, "question_start")}
-          handleQuestionEnd={this.handleMark.bind(this, "question_end")}
-          handleModal={this.handleClick.bind(this)} />) : null }
-        <CtrlBar question_start={question_start} question_end={question_end}
-                 toggleFold={this.handleFold.bind(this,!foldOn)}
-                 foldOn={foldOn}
-                 toggleFoldQuestion={this.handleFoldQuestion.bind(this,!foldOnQuestion)}
-                 foldOnQuestion={foldOnQuestion} />
+        { this.state.show_modal? (<Modal
+          handleQuestionStart={this.handleMark.bind(this)}
+          handleQuestionEnd={this.handleMark.bind(this)}
+          handleModal={this.handleClick.bind(this)}
+          questions={questions} />) : null }
+        <CtrlBar ranges={this.mergeRange()}
+                 toggleFold={this.handleFold.bind(this, !fold_on)}
+                 foldOn={fold_on}
+                 toggleFoldQuestion={this.handleFoldQuestion.bind(this,!fold_on_question)}
+                 foldOnQuestion={fold_on_question} />
       </div>
     )
   }

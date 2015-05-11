@@ -26,7 +26,7 @@ class Editor extends React.Component {
     }
   }
   handleMark(type, section) {
-    console.log(this, type, section);
+
     var {question_start, question_end} = this.state;
     switch(type) {
       case 'question_start':
@@ -41,6 +41,7 @@ class Editor extends React.Component {
       question_start, question_end,
       chosen_line: null
     });
+    location.hash = `#${question_start[section - 1] - 4}`
   }
   handleClick(index) {
     this.setState({

@@ -7,7 +7,7 @@
     "start": "node server.js",
     "build": "env NODE_ENV=production webpack build -content-base build/"
   },
-   "repository": {
+  "repository": {
     "type": "git",
     "url": "https://github.com/yhsiang/gazette-annotater.git"
   },
@@ -25,10 +25,8 @@
     "url": "https://github.com/yhsiang/gazette-annotater/issues"
   },
   "dependencies": {
-    "bluebird": "^2.9.25",
     "react": "^0.13.3",
     "react-transmit": "^2.6.1",
-    "superagent": "^1.2.0",
     "superagent-bluebird-promise": "^2.0.2"
   },
   "devDependencies": {

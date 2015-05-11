@@ -35,6 +35,7 @@ class CtrlBar extends React.Component {
             <div className="CtrlBar-btn" onClick={toggleFold}>{text}</div>
             <div className="CtrlBar-btn" onClick={toggleFoldQuestion}>{textQuestion}</div>
             {Btns}
+            <div className="CtrlBar-btn" onClick={this.props.handleNext}>下一則</div>
           </div>
         </div>
       </div>

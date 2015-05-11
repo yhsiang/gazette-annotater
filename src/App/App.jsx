@@ -5,14 +5,22 @@ import request from 'superagent-bluebird-promise'
 import './App.css'
 import Editor from '../Editor/Editor.jsx'
 
-import doc from './data/doc'
-
 class App extends React.Component {
   constructor(props) { super(props)
     this.state = { }
   }
+  componentWillMount() {
+    var sessionId = localStorage.getItem("id")
+    this.props.setQueryParams({ id: sessionId });
 
+  }
+  handleNext() {
+    var sessionId = Math.floor(Math.random() * 780) + 1;
+    localStorage.setItem("id", sessionId);
+    this.props.setQueryParams({ id: sessionId });
+  }
   render() {
+    var {doc} = this.props;
     return (
       <div className="App">
         <div className="App-title">立院公報註記小幫手</div>
@@ -20,15 +28,25 @@ class App extends React.Component {
           <p>移動滑鼠到你心儀的那一行，按下滑鼠左鍵，就期待著有什麼事情會發生。</p>
           <Editor
             meta={doc.meta}
-            lines={doc.raw.split('\n') } />
+            lines={doc.raw.split('\n') }
+            handleNext={this.handleNext.bind(this)} />
         </div>
       </div>
-    )
+    );
   }
 }
 
 App.displayName = 'App'
 
 export default Transmit.createContainer(App, {
+  queries: {
+    doc({id}) {
+      if (!id) {
+        id = Math.floor(Math.random() * 780) + 1
+        localStorage.setItem("id", id);
 
+      }
+      return request.get(`http://gapi.musou.tw/${id}`).then((res) => res.body.data).catch(()=>{ return {meta:[], raw:""};})
+    }
+  }
 });

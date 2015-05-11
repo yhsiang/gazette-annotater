@@ -7,23 +7,34 @@ import './Editor.css'
 import Modal from '../Modal/Modal.jsx'
 import CtrlBar from '../CtrlBar/CtrlBar.jsx'
 
+function updateProps(props) {
+  var question_start = props.meta.map((it)=>{
+    return it.start_at;
+  });
+  var question_end = props.meta.map((it)=>{
+    return it.end_at;
+  });
+  return {
+    questions: props.meta.length,
+    question_start, question_end
+  };
+}
+
 class Editor extends React.Component {
   constructor(props) { super(props)
-    var question_start = props.meta.map((it)=>{
-      return it.start_at;
-    });
-    var question_end = props.meta.map((it)=>{
-      return it.end_at;
-    });
-
+    var {questions, question_start, question_end} = updateProps(props);
     this.state = {
+      questions, question_start, question_end,
       show_modal: false,
-      questions: props.meta.length,
-      question_start, question_end,
       chosen_line: null,
       fold_on: true,
       fold_on_question: true
     }
+  }
+  componentWillReceiveProps(nextProps) {
+    var updates = updateProps(nextProps);
+    updates["chosen_line"] = null;
+    this.setState(updates);
   }
   handleMark(type, section) {
 
@@ -167,10 +178,10 @@ class Editor extends React.Component {
 
     // 計算整個高度
     var height = 16 * (Lines.length - 1) + 9;
-    if(fold_on)  height -= 16 * question_start[0];
+    if(fold_on)  height -= 16 * ~~question_start[0];
     var questions_height = 0;
     if(fold_on_question) {
-      for(var i = 0; i< questions; i++) {  questions_height += question_end[i] - question_start[i]; }
+      for(var i = 0; i< questions; i++) {  questions_height += ~~question_end[i] - ~~question_start[i]; }
       height -= 16 * (questions_height - 45) ;
     }
 
@@ -212,7 +223,8 @@ class Editor extends React.Component {
                  toggleFold={this.handleFold.bind(this, !fold_on)}
                  foldOn={fold_on}
                  toggleFoldQuestion={this.handleFoldQuestion.bind(this,!fold_on_question)}
-                 foldOnQuestion={fold_on_question} />
+                 foldOnQuestion={fold_on_question}
+                 handleNext={this.props.handleNext}/>
       </div>
     )
   }
